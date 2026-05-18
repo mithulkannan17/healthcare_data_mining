@@ -281,3 +281,180 @@ canvas {
     padding: 25px;
     color: white;
 }
+
+.health-alert-item {
+
+    background: #1e293b;
+
+    border-left: 4px solid #ef4444;
+
+    padding: 15px;
+
+    margin-bottom: 15px;
+
+    border-radius: 10px;
+
+    color: white;
+
+    transition: 0.3s;
+}
+
+/* Health Alert Feed */
+
+.alert-feed {
+
+    max-height: 450px;
+
+    overflow-y: auto;
+
+    padding-right: 10px;
+}
+
+.alert-feed::-webkit-scrollbar {
+
+    width: 8px;
+}
+
+.alert-feed::-webkit-scrollbar-thumb {
+
+    background: #334155;
+
+    border-radius: 10px;
+}
+
+.health-alert-item {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+    background: #0f172a;
+
+    border: 1px solid #334155;
+
+    border-radius: 15px;
+
+    padding: 18px;
+
+    margin-bottom: 18px;
+
+    transition: 0.3s;
+}
+
+.health-alert-item:hover {
+
+    transform: translateY(-3px);
+
+    border-color: #38bdf8;
+}
+
+.alert-badge {
+
+    background: #ef4444;
+
+    color: white;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    padding: 6px 10px;
+
+    border-radius: 30px;
+
+    min-width: 55px;
+
+    text-align: center;
+}
+
+.alert-content {
+
+    flex: 1;
+}
+
+.alert-title {
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 500;
+
+    line-height: 1.5;
+
+    margin-bottom: 8px;
+}
+
+.alert-time {
+
+    color: #94a3b8;
+
+    font-size: 13px;
+}
+
+.insight-container {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+.insight-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    background: #0f172a;
+
+    border: 1px solid #334155;
+
+    border-radius: 15px;
+
+    padding: 18px;
+
+    transition: 0.3s;
+}
+
+.insight-card:hover {
+
+    transform: translateX(5px);
+
+    border-color: #38bdf8;
+}
+
+.insight-icon {
+
+    width: 45px;
+
+    height: 45px;
+
+    border-radius: 50%;
+
+    background: #38bdf8;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-weight: bold;
+}
+
+.insight-text {
+
+    color: white;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}

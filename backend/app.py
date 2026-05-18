@@ -2,6 +2,7 @@ import pandas as pd
 from flask import Flask, render_template, request
 from preprocess import load_dataset
 import joblib
+import subprocess
 
 app = Flask(__name__)
 
@@ -13,6 +14,10 @@ rules_df = joblib.load(
 
 clustered_df = pd.read_csv(
     'data/clustered_patients.csv'
+)
+
+alerts_df = pd.read_csv(
+    'data/health_alerts.csv'
 )
 
 @app.route('/')
@@ -48,6 +53,65 @@ def dashboard():
 
     )
 
+    latest_alerts = alerts_df[
+        'headline'
+        ].head(5).tolist()
+    
+    insights = []
+
+    top_region = (
+        df['region']
+        .value_counts()
+        .idxmax()
+    )
+
+    top_disease = (
+        df['disease_category']
+        .value_counts()
+        .idxmax()
+    )
+
+    severe_smokers = len(
+
+        df[
+            (df['smoking_status'] == 'Current') &
+            (df['severity'] == 'Severe')
+        ]
+    )
+
+    avg_bmi = round(
+        df['bmi'].mean(),
+        1
+    )
+
+    rural_severe = len(
+
+        df[
+            (df['urban_rural'] == 'Rural') &
+            (df['severity'] == 'Severe')
+        ]
+    )
+
+    insights.append(
+        f"{top_region} region shows dominant healthcare case concentration."
+    )
+
+    insights.append(
+        f"{top_disease} is the most common disease category in the dataset."
+    )
+
+    insights.append(
+        f"{severe_smokers} severe cases are associated with active smoking."
+    )
+
+    insights.append(
+        f"Average patient BMI observed is {avg_bmi}."
+    )
+
+    insights.append(
+        f"{rural_severe} severe cases were identified in rural populations."
+    )
+
     return render_template(
 
         'dashboard.html',
@@ -64,8 +128,11 @@ def dashboard():
 
         severity_counts=severity_counts,
 
-        region_disease_map=
-        region_disease_map.to_dict()
+        region_disease_map=region_disease_map.to_dict(),
+
+        latest_alerts=latest_alerts,
+
+        insights=insights,
     )
 
 @app.route('/risk-checker')
@@ -467,6 +534,22 @@ def clusters():
 
         region_disease=region_disease
     )
+
+@app.route('/refresh-alerts')
+def refresh_alerts():
+
+    global alerts_df
+
+    subprocess.run([
+        'python',
+        'health_scraper.py'
+    ])
+
+    alerts_df = pd.read_csv(
+        'data/health_alerts.csv'
+    )
+
+    return dashboard()
 
 if __name__ == '__main__':
 

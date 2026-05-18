@@ -96,11 +96,99 @@
 
         <div class="card chart-card">
 
-            <h5>
+            <h5 class="mb-4">
                 Regional Disease Intelligence
             </h5>
 
             <canvas id="regionHeatmap"></canvas>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row mt-5">
+
+    <div class="col-md-12">
+
+        <div class="card chart-card">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <h5 class="mb-0">
+                    Live Health Intelligence Alerts
+                </h5>
+
+                <a href="/refresh-alerts" class="btn btn-sm btn-primary">
+                    Refresh Alerts
+                </a>
+
+            </div>
+
+            <div class="alert-feed">
+
+                {% for alert in latest_alerts %}
+
+                <div class="health-alert-item">
+
+                    <div class="alert-badge">
+                        LIVE
+                    </div>
+
+                    <div class="alert-content">
+
+                        <div class="alert-title">
+                            {{ alert }}
+                        </div>
+
+                        <div class="alert-time">
+                            Public Health Intelligence Feed
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row mt-5">
+
+    <div class="col-md-12">
+
+        <div class="card chart-card">
+
+            <h5 class="mb-4">
+                AI Generated Healthcare Insights
+            </h5>
+
+            <div class="insight-container">
+
+                {% for insight in insights %}
+
+                <div class="insight-card">
+
+                    <div class="insight-icon">
+                        AI
+                    </div>
+
+                    <div class="insight-text">
+                        {{ insight }}
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
 
         </div>
 
