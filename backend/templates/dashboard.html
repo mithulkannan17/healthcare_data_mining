@@ -9,31 +9,51 @@
 <div class="row mt-4">
 
     <div class="col-md-3">
+
         <div class="card dashboard-card">
+
             <h5>Total Patients</h5>
+
             <h2>{{ total_patients }}</h2>
+
         </div>
+
     </div>
 
     <div class="col-md-3">
+
         <div class="card dashboard-card">
+
             <h5>High Risk Cases</h5>
+
             <h2>{{ high_risk_cases }}</h2>
+
         </div>
+
     </div>
 
     <div class="col-md-3">
+
         <div class="card dashboard-card">
+
             <h5>Disease Categories</h5>
+
             <h2>{{ disease_categories }}</h2>
+
         </div>
+
     </div>
 
     <div class="col-md-3">
+
         <div class="card dashboard-card">
+
             <h5>States Covered</h5>
+
             <h2>{{ states_covered }}</h2>
+
         </div>
+
     </div>
 
 </div>
@@ -41,17 +61,49 @@
 <div class="row mt-5">
 
     <div class="col-md-6">
+
         <div class="card chart-card">
-            <h5>Disease Distribution</h5>
+
+            <h5>
+                Disease Distribution
+            </h5>
+
             <canvas id="diseaseChart"></canvas>
+
         </div>
+
     </div>
 
     <div class="col-md-6">
+
         <div class="card chart-card">
-            <h5>Severity Analysis</h5>
+
+            <h5>
+                Severity Analysis
+            </h5>
+
             <canvas id="severityChart"></canvas>
+
         </div>
+
+    </div>
+
+</div>
+
+<div class="row mt-5">
+
+    <div class="col-md-12">
+
+        <div class="card chart-card">
+
+            <h5>
+                Regional Disease Intelligence
+            </h5>
+
+            <canvas id="regionHeatmap"></canvas>
+
+        </div>
+
     </div>
 
 </div>
@@ -60,8 +112,14 @@
 
 <script>
 
-    const diseaseData = {{ disease_counts | tojson }};
-    const severityData = {{ severity_counts | tojson }};
+    const diseaseData =
+        {{ disease_counts | tojson }};
+
+    const severityData =
+        {{ severity_counts | tojson }};
+
+    const regionDiseaseMap =
+        {{ region_disease_map | tojson }};
 
 </script>
 

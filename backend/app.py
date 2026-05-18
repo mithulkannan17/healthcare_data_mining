@@ -1,13 +1,10 @@
 import pandas as pd
 from flask import Flask, render_template, request
 from preprocess import load_dataset
-from datetime import datetime
 import joblib
-
 
 app = Flask(__name__)
 
-# Load Dataset
 df = load_dataset()
 
 rules_df = joblib.load(
@@ -18,10 +15,6 @@ clustered_df = pd.read_csv(
     'data/clustered_patients.csv'
 )
 
-# =========================
-# DASHBOARD
-# =========================
- 
 @app.route('/')
 def dashboard():
 
@@ -35,35 +28,45 @@ def dashboard():
 
     states_covered = df['state'].nunique()
 
-    # Disease Distribution
     disease_counts = (
         df['disease_category']
         .value_counts()
         .to_dict()
     )
 
-    # Severity Distribution
     severity_counts = (
         df['severity']
         .value_counts()
         .to_dict()
     )
 
+    region_disease_map = (
+
+        df.groupby(['region', 'disease_category'])
+        .size()
+        .unstack(fill_value=0)
+
+    )
+
     return render_template(
+
         'dashboard.html',
 
         total_patients=total_patients,
+
         high_risk_cases=high_risk_cases,
+
         disease_categories=disease_categories,
+
         states_covered=states_covered,
 
         disease_counts=disease_counts,
-        severity_counts=severity_counts
-    )
 
-# =========================
-# RISK CHECKER PAGE
-# =========================
+        severity_counts=severity_counts,
+
+        region_disease_map=
+        region_disease_map.to_dict()
+    )
 
 @app.route('/risk-checker')
 def risk_checker():
@@ -72,10 +75,6 @@ def risk_checker():
         'risk_checker.html',
         prediction=None
     )
-
-# =========================
-# PREDICTION LOGIC
-# =========================
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -101,10 +100,6 @@ def predict():
     risk_score = 0
 
     explanations = []
-
-    # =========================
-    # DISEASE PREDICTION
-    # =========================
 
     predicted_disease = "General Infection"
 
@@ -136,10 +131,6 @@ def predict():
         predicted_disease = "Hypertension"
 
         disease_category = "Chronic"
-
-    # =========================
-    # RISK FACTORS
-    # =========================
 
     if age >= 60:
 
@@ -181,10 +172,6 @@ def predict():
             f"Existing comorbidity detected: {comorbidity}."
         )
 
-    # =========================
-    # REGION ANALYSIS
-    # =========================
-
     if (
         region == 'East' and
         season == 'Monsoon'
@@ -196,19 +183,13 @@ def predict():
             "Eastern monsoon regions show high waterborne disease frequency."
         )
 
-    if (
-        urban_rural == 'Rural'
-    ):
+    if urban_rural == 'Rural':
 
         risk_score += 1
 
         explanations.append(
             "Rural healthcare access limitations may delay treatment."
         )
-
-    # =========================
-    # HISTORICAL MATCHING
-    # =========================
 
     similar_patients = df[
         df['disease_category'] == disease_category
@@ -252,10 +233,6 @@ def predict():
         f"{severe_percentage}% of similar patients had Severe outcomes."
     )
 
-    # =========================
-    # CLUSTER PROFILE
-    # =========================
-
     cluster_profile = "Urban Low-Risk Group"
 
     if (
@@ -271,10 +248,6 @@ def predict():
     ):
 
         cluster_profile = "Chronic Lifestyle Risk Cluster"
-
-    # =========================
-    # FINAL SEVERITY
-    # =========================
 
     if risk_score >= 7:
 
@@ -336,10 +309,6 @@ def predict():
         }
     )
 
-# =========================
-# RULES PAGE
-# =========================
-
 @app.route('/rules')
 def rules():
 
@@ -368,10 +337,6 @@ def rules():
         'rules.html',
         rules=top_rules
     )
-
-# =========================
-# CLUSTERS PAGE
-# =========================
 
 @app.route('/clusters')
 def clusters():
@@ -502,68 +467,6 @@ def clusters():
 
         region_disease=region_disease
     )
-
-
-
-# =========================
-# SAVE PATIENT
-# =========================
-
-@app.route('/save-patient', methods=['POST'])
-def save_patient():
-
-    global df
-
-    new_patient = {
-
-        'patient_id': request.form['patient_id'],
-
-        'age': int(request.form['age']),
-
-        'gender': request.form['gender'],
-
-        'state': request.form['state'],
-
-        'region': request.form['region'],
-
-        'disease_category': request.form['disease_category'],
-
-        'severity': request.form['severity'],
-
-        'bmi': float(request.form['bmi']),
-
-        'symptoms': request.form['symptoms'],
-
-        'smoking_status': request.form['smoking_status']
-    }
-
-    # APPEND TO DATAFRAME
-
-    df = pd.concat(
-        [
-            df,
-            pd.DataFrame([new_patient])
-        ],
-        ignore_index=True
-    )
-
-    # SAVE TO CSV
-
-    df.to_csv(
-        'data/indian_disease_dataset.csv',
-        index=False
-    )
-
-    return render_template(
-
-        'add_patient.html',
-
-        success="Patient record added successfully."
-    )
-
-# =========================
-# RUN APP
-# =========================
 
 if __name__ == '__main__':
 
