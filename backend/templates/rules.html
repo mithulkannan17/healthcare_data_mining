@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="page-title">
+    Association Rule Mining Explorer
+</h1>
+
+<div class="row mt-4">
+
+    {% for rule in rules %}
+
+    <div class="col-md-6 mb-4">
+
+        <div class="card rule-card">
+
+            <h5 class="rule-title">
+
+                {{ rule.antecedents }}
+
+                →
+
+                {{ rule.consequents }}
+
+            </h5>
+
+            <div class="rule-metrics">
+
+                <p>
+                    <strong>Support:</strong>
+                    {{ rule.support }}
+                </p>
+
+                <p>
+                    <strong>Confidence:</strong>
+                    {{ rule.confidence }}
+                </p>
+
+                <p>
+                    <strong>Lift:</strong>
+                    {{ rule.lift }}
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

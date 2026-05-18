@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="page-title">
+    Healthcare Cluster Intelligence Dashboard
+</h1>
+
+<div class="row">
+
+    <div class="col-md-6 mb-4">
+
+        <div class="card cluster-chart-card">
+
+            <h4>
+                Age vs Severity
+            </h4>
+
+            <canvas id="ageSeverityChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-6 mb-4">
+
+        <div class="card cluster-chart-card">
+
+            <h4>
+                Smoking Status vs Severity
+            </h4>
+
+            <canvas id="smokingChart"></canvas>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-6 mb-4">
+
+        <div class="card cluster-chart-card">
+
+            <h4>
+                Alcohol Use vs Severity
+            </h4>
+
+            <canvas id="alcoholChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-6 mb-4">
+
+        <div class="card cluster-chart-card">
+
+            <h4>
+                Region vs Disease Category
+            </h4>
+
+            <canvas id="regionChart"></canvas>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row mt-4">
+
+    {% for cluster in clusters %}
+
+    <div class="col-md-6 mb-4">
+
+        <div class="card cluster-card">
+
+            <div class="cluster-header">
+
+                <h3>
+                    Cluster {{ cluster.cluster_id }}
+                </h3>
+
+                <div class="
+                    cluster-risk
+
+                    {% if cluster.risk_level == 'HIGH RISK' %}
+                        high-risk
+                    {% endif %}
+                ">
+
+                    {{ cluster.risk_level }}
+
+                </div>
+
+            </div>
+
+            <div class="cluster-info">
+
+                <p>
+                    <strong>Total Patients:</strong>
+                    {{ cluster.patient_count }}
+                </p>
+
+                <p>
+                    <strong>Average Age:</strong>
+                    {{ cluster.avg_age }}
+                </p>
+
+                <p>
+                    <strong>Average BMI:</strong>
+                    {{ cluster.avg_bmi }}
+                </p>
+
+                <p>
+                    <strong>Dominant Disease:</strong>
+                    {{ cluster.dominant_disease }}
+                </p>
+
+                <p>
+                    <strong>Dominant Region:</strong>
+                    {{ cluster.dominant_region }}
+                </p>
+
+                <p>
+                    <strong>Severe Case Percentage:</strong>
+                    {{ cluster.severe_percentage }}%
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+    const ageSeverity =
+        {{ age_severity | tojson }};
+
+    const smokingSeverity =
+        {{ smoking_severity | tojson }};
+
+    const alcoholSeverity =
+        {{ alcohol_severity | tojson }};
+
+    const regionDisease =
+        {{ region_disease | tojson }};
+
+</script>
+
+<script src="{{ url_for('static', filename='js/cluster_dashboard.js') }}"></script>
+
+{% endblock %}
