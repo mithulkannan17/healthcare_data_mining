@@ -20,6 +20,10 @@ alerts_df = pd.read_csv(
     'data/health_alerts.csv'
 )
 
+metrics = joblib.load(
+    'models/model_metrics.pkl'
+)
+
 @app.route('/')
 def dashboard():
 
@@ -55,8 +59,8 @@ def dashboard():
 
     latest_alerts = alerts_df[
         'headline'
-        ].head(5).tolist()
-    
+    ].head(5).tolist()
+
     insights = []
 
     top_region = (
@@ -133,6 +137,8 @@ def dashboard():
         latest_alerts=latest_alerts,
 
         insights=insights,
+
+        metrics=metrics
     )
 
 @app.route('/risk-checker')
@@ -430,22 +436,12 @@ def clusters():
             1
         )
 
-        dominant_disease = (
-            cluster_data['disease_category']
-            .mode()[0]
-        )
-
-        dominant_region = (
-            cluster_data['region']
-            .mode()[0]
-        )
-
         severe_percentage = round(
 
             (
                 len(
                     cluster_data[
-                        cluster_data['severity'] == 'Severe'
+                        cluster_data['severity'] == 2
                     ]
                 )
 
@@ -472,17 +468,13 @@ def clusters():
 
         cluster_profiles.append({
 
-            'cluster_id': cluster_id,
+            'cluster_id': int(cluster_id),
 
             'patient_count': len(cluster_data),
 
             'avg_age': avg_age,
 
             'avg_bmi': avg_bmi,
-
-            'dominant_disease': dominant_disease,
-
-            'dominant_region': dominant_region,
 
             'severe_percentage': severe_percentage,
 
@@ -513,7 +505,7 @@ def clusters():
     )
 
     region_disease = (
-        clustered_df
+        df
         .groupby(['region', 'disease_category'])
         .size()
         .unstack(fill_value=0)

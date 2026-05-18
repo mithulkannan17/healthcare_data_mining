@@ -70,7 +70,7 @@
 
 </div>
 
-<div class="row mt-4">
+<div class="row mt-5">
 
     {% for cluster in clusters %}
 
@@ -115,15 +115,23 @@
                     {{ cluster.avg_bmi }}
                 </p>
 
+                {% if cluster.dominant_disease %}
+
                 <p>
                     <strong>Dominant Disease:</strong>
                     {{ cluster.dominant_disease }}
                 </p>
 
+                {% endif %}
+
+                {% if cluster.dominant_region %}
+
                 <p>
                     <strong>Dominant Region:</strong>
                     {{ cluster.dominant_region }}
                 </p>
+
+                {% endif %}
 
                 <p>
                     <strong>Severe Case Percentage:</strong>

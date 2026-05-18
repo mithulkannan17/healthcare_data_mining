@@ -196,6 +196,58 @@
 
 </div>
 
+<div class="row mt-4">
+
+    <div class="col-md-4">
+
+        <div class="card dashboard-card">
+
+            <h5>
+                KNN Accuracy
+            </h5>
+
+            <h2>
+                {{ metrics.accuracy }}%
+            </h2>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card dashboard-card">
+
+            <h5>
+                Precision
+            </h5>
+
+            <h2>
+                {{ metrics.precision }}%
+            </h2>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card dashboard-card">
+
+            <h5>
+                Recall
+            </h5>
+
+            <h2>
+                {{ metrics.recall }}%
+            </h2>
+
+        </div>
+
+    </div>
+
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>

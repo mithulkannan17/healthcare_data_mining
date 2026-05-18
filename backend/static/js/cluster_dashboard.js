@@ -1,280 +1,341 @@
-new Chart(
+if (document.getElementById('ageSeverityChart')) {
 
-    document.getElementById('ageSeverityChart'),
+    new Chart(
 
-    {
+        document.getElementById('ageSeverityChart'),
 
-        type: 'bar',
+        {
 
-        data: {
+            type: 'bar',
 
-            labels: Object.keys(ageSeverity),
+            data: {
 
-            datasets: [{
+                labels: Object.keys(ageSeverity),
 
-                label: 'Average Age',
+                datasets: [{
 
-                data: Object.values(ageSeverity),
+                    label: 'Average Age',
 
-                backgroundColor: '#38bdf8'
-            }]
-        },
+                    data: Object.values(ageSeverity),
 
-        options: {
+                    backgroundColor: '#38bdf8',
 
-            plugins: {
-
-                legend: {
-
-                    labels: {
-                        color: 'white'
-                    }
-                }
+                    borderRadius: 8
+                }]
             },
 
-            scales: {
+            options: {
 
-                x: {
+                responsive: true,
 
-                    ticks: {
-                        color: 'white'
+                plugins: {
+
+                    legend: {
+
+                        labels: {
+                            color: 'white'
+                        }
                     }
                 },
 
-                y: {
+                scales: {
 
-                    ticks: {
-                        color: 'white'
+                    x: {
+
+                        ticks: {
+                            color: 'white'
+                        },
+
+                        grid: {
+                            color: '#334155'
+                        }
+                    },
+
+                    y: {
+
+                        ticks: {
+                            color: 'white'
+                        },
+
+                        grid: {
+                            color: '#334155'
+                        }
                     }
                 }
             }
         }
-    }
-);
-
-const smokingLabels =
-    Object.keys(smokingSeverity);
-
-const severityKeys =
-    Object.keys(
-        smokingSeverity[smokingLabels[0]]
     );
+}
 
-const smokingDatasets =
-    severityKeys.map((severity, index) => ({
+if (document.getElementById('smokingChart')) {
 
-        label: severity,
+    const smokingLabels =
+        Object.keys(smokingSeverity);
 
-        data: smokingLabels.map(
-            label => smokingSeverity[label][severity]
-        ),
+    const severityKeys =
+        Object.keys(
+            smokingSeverity[smokingLabels[0]]
+        );
 
-        backgroundColor: [
-            '#38bdf8',
-            '#ef4444',
-            '#22c55e'
-        ][index]
-    }));
+    const smokingDatasets =
+        severityKeys.map((severity, index) => ({
 
-new Chart(
+            label: severity,
 
-    document.getElementById('smokingChart'),
+            data: smokingLabels.map(
+                label => smokingSeverity[label][severity]
+            ),
 
-    {
+            backgroundColor: [
+                '#38bdf8',
+                '#ef4444',
+                '#22c55e'
+            ][index % 3],
 
-        type: 'bar',
+            borderRadius: 6
+        }));
 
-        data: {
+    new Chart(
 
-            labels: smokingLabels,
+        document.getElementById('smokingChart'),
 
-            datasets: smokingDatasets
-        },
+        {
 
-        options: {
+            type: 'bar',
 
-            plugins: {
+            data: {
 
-                legend: {
+                labels: smokingLabels,
 
-                    labels: {
-                        color: 'white'
-                    }
-                }
+                datasets: smokingDatasets
             },
 
-            scales: {
+            options: {
 
-                x: {
+                responsive: true,
 
-                    stacked: true,
+                plugins: {
 
-                    ticks: {
-                        color: 'white'
+                    legend: {
+
+                        labels: {
+                            color: 'white'
+                        }
                     }
                 },
 
-                y: {
+                scales: {
 
-                    stacked: true,
+                    x: {
 
-                    ticks: {
-                        color: 'white'
+                        stacked: true,
+
+                        ticks: {
+                            color: 'white'
+                        },
+
+                        grid: {
+                            color: '#334155'
+                        }
+                    },
+
+                    y: {
+
+                        stacked: true,
+
+                        ticks: {
+                            color: 'white'
+                        },
+
+                        grid: {
+                            color: '#334155'
+                        }
                     }
                 }
             }
         }
-    }
-);
-
-const alcoholLabels =
-    Object.keys(alcoholSeverity);
-
-const alcoholSeverityKeys =
-    Object.keys(
-        alcoholSeverity[alcoholLabels[0]]
     );
+}
 
-const alcoholDatasets =
-    alcoholSeverityKeys.map((severity, index) => ({
+if (document.getElementById('alcoholChart')) {
 
-        label: severity,
+    const alcoholLabels =
+        Object.keys(alcoholSeverity);
 
-        data: alcoholLabels.map(
-            label => alcoholSeverity[label][severity]
-        ),
+    const alcoholSeverityKeys =
+        Object.keys(
+            alcoholSeverity[alcoholLabels[0]]
+        );
 
-        backgroundColor: [
-            '#eab308',
-            '#ef4444',
-            '#22c55e'
-        ][index]
-    }));
+    const alcoholDatasets =
+        alcoholSeverityKeys.map((severity, index) => ({
 
-new Chart(
+            label: severity,
 
-    document.getElementById('alcoholChart'),
+            data: alcoholLabels.map(
+                label => alcoholSeverity[label][severity]
+            ),
 
-    {
+            backgroundColor: [
+                '#eab308',
+                '#ef4444',
+                '#22c55e'
+            ][index % 3],
 
-        type: 'bar',
+            borderRadius: 6
+        }));
 
-        data: {
+    new Chart(
 
-            labels: alcoholLabels,
+        document.getElementById('alcoholChart'),
 
-            datasets: alcoholDatasets
-        },
+        {
 
-        options: {
+            type: 'bar',
 
-            plugins: {
+            data: {
 
-                legend: {
+                labels: alcoholLabels,
 
-                    labels: {
-                        color: 'white'
-                    }
-                }
+                datasets: alcoholDatasets
             },
 
-            scales: {
+            options: {
 
-                x: {
+                responsive: true,
 
-                    stacked: true,
+                plugins: {
 
-                    ticks: {
-                        color: 'white'
+                    legend: {
+
+                        labels: {
+                            color: 'white'
+                        }
                     }
                 },
 
-                y: {
+                scales: {
 
-                    stacked: true,
+                    x: {
 
-                    ticks: {
-                        color: 'white'
+                        stacked: true,
+
+                        ticks: {
+                            color: 'white'
+                        },
+
+                        grid: {
+                            color: '#334155'
+                        }
+                    },
+
+                    y: {
+
+                        stacked: true,
+
+                        ticks: {
+                            color: 'white'
+                        },
+
+                        grid: {
+                            color: '#334155'
+                        }
                     }
                 }
             }
         }
-    }
-);
-
-const regions =
-    Object.keys(regionDisease);
-
-const diseaseKeys =
-    Object.keys(
-        regionDisease[regions[0]]
     );
+}
 
-const regionDatasets =
-    diseaseKeys.map((disease, index) => ({
+if (document.getElementById('regionChart')) {
 
-        label: disease,
+    const regions =
+        Object.keys(regionDisease);
 
-        data: regions.map(
-            region => regionDisease[region][disease]
-        ),
+    const diseaseKeys =
+        Object.keys(
+            regionDisease[regions[0]]
+        );
 
-        backgroundColor: [
-            '#38bdf8',
-            '#ef4444',
-            '#22c55e',
-            '#a855f7',
-            '#eab308'
-        ][index % 5]
-    }));
+    const regionDatasets =
+        diseaseKeys.map((disease, index) => ({
 
-new Chart(
+            label: disease,
 
-    document.getElementById('regionChart'),
+            data: regions.map(
+                region => regionDisease[region][disease]
+            ),
 
-    {
+            backgroundColor: [
+                '#38bdf8',
+                '#ef4444',
+                '#22c55e',
+                '#a855f7',
+                '#eab308',
+                '#f97316'
+            ][index % 6],
 
-        type: 'bar',
+            borderRadius: 6
+        }));
 
-        data: {
+    new Chart(
 
-            labels: regions,
+        document.getElementById('regionChart'),
 
-            datasets: regionDatasets
-        },
+        {
 
-        options: {
+            type: 'bar',
 
-            plugins: {
+            data: {
 
-                legend: {
+                labels: regions,
 
-                    labels: {
-                        color: 'white'
-                    }
-                }
+                datasets: regionDatasets
             },
 
-            scales: {
+            options: {
 
-                x: {
+                responsive: true,
 
-                    stacked: true,
+                plugins: {
 
-                    ticks: {
-                        color: 'white'
+                    legend: {
+
+                        labels: {
+                            color: 'white'
+                        }
                     }
                 },
 
-                y: {
+                scales: {
 
-                    stacked: true,
+                    x: {
 
-                    ticks: {
-                        color: 'white'
+                        stacked: true,
+
+                        ticks: {
+                            color: 'white'
+                        },
+
+                        grid: {
+                            color: '#334155'
+                        }
+                    },
+
+                    y: {
+
+                        stacked: true,
+
+                        ticks: {
+                            color: 'white'
+                        },
+
+                        grid: {
+                            color: '#334155'
+                        }
                     }
                 }
             }
         }
-    }
-);
+    );
+}
